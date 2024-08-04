@@ -48,7 +48,7 @@ router.post('/', asyncHandler(async (req, res) => {
             const { name } = req.body;
             let imageUrl = 'no_url';
             if (req.file) {
-                imageUrl = `https://api-node-mart.vercel.app/image/category/${req.file.filename}`;
+                imageUrl = `https://api-node-mart.vercel.app/category/${req.file.filename}`;
             }
             console.log('url ', req.file)
 
