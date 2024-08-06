@@ -21,6 +21,7 @@
     "mongodb": "^6.8.0",
     "mongoose": "^8.4.4",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.14",
     "onesignal-node": "^3.4.0",
     "stripe": "^15.6.0"
   }

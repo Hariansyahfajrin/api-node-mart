@@ -7,12 +7,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 3,
-    trim: true
+    trim: true,
+    unique: true
   },
   password: {
     type: String,
     required: true,
     minlength: 6
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
   },
   createdAt: {
     type: Date,
@@ -21,7 +27,9 @@ const userSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 });
 
 // Middleware untuk memperbarui updatedAt setiap kali dokumen disimpan

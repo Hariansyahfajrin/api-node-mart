@@ -50,6 +50,7 @@ router.post('/midtrans', asyncHandler(async (req, res) => {
     const transaction = await midtrans.createTransaction(parameter);
 
     res.json({
+      order_id: order_id, // Add order_id to the response
       token: transaction.token,
       redirect_url: transaction.redirect_url
     });
@@ -57,6 +58,39 @@ router.post('/midtrans', asyncHandler(async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.json({ error: true, message: error.message, data: null });
+  }
+}));
+
+router.post('/midtrans/check-status', asyncHandler(async (req, res) => {
+  try {
+    const { order_id } = req.body; // Ganti token dengan order_id
+
+    if (!order_id) {
+      return res.status(400).json({ error: true, message: 'Order ID is required' });
+    }
+
+    console.log(`Checking status for order_id: ${order_id}`);
+
+    // Periksa status transaksi dengan order_id
+    const transaction = await midtrans.transaction.status(order_id);
+    console.log(`Transaction status response:`, transaction);
+
+    if (transaction.status_code === "404") {
+      return res.status(404).json({
+        error: true,
+        message: "Transaction doesn't exist."
+      });
+    }
+
+    res.json({
+      error: false,
+      message: 'Success',
+      status: transaction.transaction_status
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: true, message: error.message });
   }
 }));
 
